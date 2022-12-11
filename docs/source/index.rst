@@ -1,0 +1,14 @@
+Welcome to ray-tune-stoppers-contrib documentation!
+==========================================
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
