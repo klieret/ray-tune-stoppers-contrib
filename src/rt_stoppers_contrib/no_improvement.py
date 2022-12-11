@@ -25,12 +25,15 @@ class NoImprovementStopper(tune.Stopper):
                 Any change that is less than that is considered no improvement. If set
                 to 0, any change is considered an improvement.
             mode: "max" or "min"
-            patience: Number of iterations without improvement after which to stop
+            patience: Number of iterations without improvement after which to stop.
+                If 1, stop after the first iteration without improvement.
             grace_period: Number of iterations to wait before considering stopping
         """
         self.metric = metric
         self.rel_change_thld = rel_change_thld
         self.mode = mode
+        if patience < 1:
+            raise ValueError("Patience must be at least 1.")
         self.patience = patience
         self.grace_period = grace_period
         self._best: DefaultDict[Any, None | float] = collections.defaultdict(
@@ -49,7 +52,7 @@ class NoImprovementStopper(tune.Stopper):
             return False
         if self.mode == "max" and ratio > 1 + self.rel_change_thld:
             return True
-        if self.mode == "min" and ratio < 1 + self.rel_change_thld:
+        if self.mode == "min" and ratio < 1 - self.rel_change_thld:
             return True
         return False
 
