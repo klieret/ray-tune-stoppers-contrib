@@ -51,7 +51,7 @@ class ThresholdByEpochStopper(tune.Stopper):
         threshold = self._get_threshold(self._epoch[trial_id])
         if isnan(threshold):
             return False
-        return self._better_than(result[self._metric], threshold)
+        return not self._better_than(result[self._metric], threshold)
 
     def stop_all(self) -> bool:
         return False
