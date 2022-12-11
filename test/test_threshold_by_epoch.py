@@ -43,3 +43,9 @@ cases.extend([get_reversed_experiment(c) for c in _cases])
 @pytest.mark.parametrize("case", cases)
 def test_integration(case):
     case.run()
+
+
+def test_invalid_mode():
+    stopper = ThresholdByEpochStopper("loss", {1: 1}, mode="invalid")
+    with pytest.raises(ValueError, match="Invalid mode"):
+        stopper(0, {"loss": 1.0})

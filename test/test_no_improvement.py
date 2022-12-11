@@ -28,6 +28,10 @@ _cases = [
     ),
     StopperTester(
         stopper=NoImprovementStopper(patience=3, metric="loss"),
+        metric_results=[0.0, 0.0, 0.0, 0.0],
+    ),
+    StopperTester(
+        stopper=NoImprovementStopper(patience=3, metric="loss"),
         metric_results=[0.9, 3.0, 2.0, 1.0],
         doesnt_stop=True,
     ),
