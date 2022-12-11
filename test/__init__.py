@@ -22,6 +22,7 @@ class StopperTester:
         last_epoch = len(self._metric_results)
         for epoch, result in enumerate(self._metric_results, start=1):
             ret = self._stopper(0, {"loss": result})
+            assert not self._stopper.stop_all()
             if epoch < last_epoch:
                 assert not ret, "Should not have stopped yet"
             else:

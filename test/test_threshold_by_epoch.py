@@ -6,7 +6,7 @@ import pytest
 
 from rt_stoppers_contrib.threshold_by_epoch import ThresholdByEpochStopper
 
-cases = [
+_cases = [
     StopperTester(
         ThresholdByEpochStopper("loss", None),
         [1.0, 2.0, 3.0, 4.0],
@@ -20,6 +20,7 @@ cases = [
         ],
     ),
 ]
+cases = [c for c in _cases]
 
 
 @pytest.mark.parametrize("case", cases)
