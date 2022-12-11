@@ -67,7 +67,7 @@ class NoImprovementStopper(tune.Stopper):
         self._stagnant[trial_id] += 1
         if self._epoch[trial_id] < self.grace_period:
             return False
-        if self._stagnant[trial_id] > self.patience:
+        if self._stagnant[trial_id] >= self.patience:
             return True
         return False
 

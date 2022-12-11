@@ -6,4 +6,4 @@ except ModuleNotFoundError:
     from importlib_metadata import version  # type: ignore
 
 
-__version__ = version("ray-tune-stoppers-contrib")
+__version__ = version("rt_stoppers_contrib")
