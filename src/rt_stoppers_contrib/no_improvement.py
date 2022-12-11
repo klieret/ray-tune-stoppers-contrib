@@ -29,13 +29,13 @@ class NoImprovementStopper(tune.Stopper):
                 If 1, stop after the first iteration without improvement.
             grace_period: Number of iterations to wait before considering stopping
         """
-        self.metric = metric
-        self.rel_change_thld = rel_change_thld
-        self.mode = mode
+        self._metric = metric
+        self._rel_change_thld = rel_change_thld
+        self._comparison_mode = mode
         if patience < 1:
             raise ValueError("Patience must be at least 1.")
-        self.patience = patience
-        self.grace_period = grace_period
+        self._patience = patience
+        self._grace_period = grace_period
         self._best: DefaultDict[Any, None | float] = collections.defaultdict(
             lambda: None
         )
@@ -50,27 +50,27 @@ class NoImprovementStopper(tune.Stopper):
             ratio = None
         if ratio is None:
             return False
-        if self.mode == "max" and ratio > 1 + self.rel_change_thld:
+        if self._comparison_mode == "max" and ratio > 1 + self._rel_change_thld:
             return True
-        if self.mode == "min" and ratio < 1 - self.rel_change_thld:
+        if self._comparison_mode == "min" and ratio < 1 - self._rel_change_thld:
             return True
         return False
 
     def __call__(self, trial_id, result) -> bool:
         self._epoch[trial_id] += 1
         if self._best[trial_id] is None:
-            self._best[trial_id] = result[self.metric]
+            self._best[trial_id] = result[self._metric]
             return False
         best_result = self._best[trial_id]
         assert best_result is not None  # for mypy
-        if self._better_than(result[self.metric], best_result):
-            self._best[trial_id] = result[self.metric]
+        if self._better_than(result[self._metric], best_result):
+            self._best[trial_id] = result[self._metric]
             self._stagnant[trial_id] = 0
             return False
         self._stagnant[trial_id] += 1
-        if self._epoch[trial_id] < self.grace_period:
+        if self._epoch[trial_id] < self._grace_period:
             return False
-        if self._stagnant[trial_id] >= self.patience:
+        if self._stagnant[trial_id] >= self._patience:
             return True
         return False
 

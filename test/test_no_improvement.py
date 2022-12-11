@@ -13,7 +13,7 @@ def get_reversed_experiment(st: StopperTester):
     (and vice-versa)
     """
     stopper = deepcopy(st._stopper)
-    stopper.mode = "min" if stopper.mode == "max" else "max"
+    stopper._comparison_mode = "min" if stopper._comparison_mode == "max" else "max"
     return StopperTester(
         stopper=stopper,
         metric_results=list(reversed(st._metric_results)),
