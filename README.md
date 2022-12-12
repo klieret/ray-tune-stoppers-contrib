@@ -1,4 +1,6 @@
-# ray-tune-stoppers-contrib
+<div>
+
+# Additional stoppers for ray tune
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
@@ -10,23 +12,52 @@
 [![link checker](https://github.com/klieret/ray-tune-stoppers-contrib/actions/workflows/check-links.yaml/badge.svg)](https://github.com/klieret/ray-tune-stoppers-contrib/actions)
 [![codecov](https://codecov.io/github/klieret/ray-tune-stoppers-contrib/branch/main/graph/badge.svg?token=6MQZ4LODE5)](https://codecov.io/github/klieret/ray-tune-stoppers-contrib)
 [![gitmoji](https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg)](https://gitmoji.dev)
-[![License](https://img.shields.io/github/license/klieret/ray-tune-stoppers-contrib)](https://github.com/klieret/ray-tune-stoppers-contrib/blob/master/LICENSE.txt)
 [![Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
 [![PR welcome](https://img.shields.io/badge/PR-Welcome-%23FF8300.svg)](https://git-scm.com/book/en/v2/GitHub-Contributing-to-a-Project)
 
+</div>
+
 ## 📝 Description
 
-Additional stoppers for ray tune
+[Ray tune][ray-tune] is a tool for scalable hyperparameter tuning for machine learning applications.
+For intelligent hyperperameter optimization, trials that are performing inadequately should be stopped early.
+Part of this can be done by schedulers such as [ASHA](asha-paper), but additional explicit stopping criteria are useful as well.
+
+For example, a trial that has converged and is no longer producing better results, but is still outperforming all other running trials, will not be stopped by ASHA.
+Ray tune currently only provides three different stoppers: a plateau stopper, a maximum iterations stopper, and a timeout stopper.
+
+This module aims to foster a greater variety of community maintained contributed stopping mechanisms.
 
 ## 📦 Installation
 
+```bash
+pip3 install rt_stoppers_contrib
+```
+
 ## 🔥 Running it!
+
+Using any other stoppers is as easy as
+
+```python3
+from rt_stoppers_contrib.no_improvement import NoImprovementStopper
+
+
+tuner = tune.Tuner(
+    tune.Trainable,
+    tune_config=...,
+    run_config=air.RunConfig(stop=NoImprovementStopper())
+)
+```
+
+For more information, refer to the [documentation][docs]
 
 ## 🧰 Development setup
 
 ```bash
 pip3 install pre-commit
+cd <this repository>
 pre-commit install
+gitmoji -i
 ```
 
 ## 💖 Contributing
@@ -48,3 +79,7 @@ Bug reports and pull requests are credited with the help of the [allcontributors
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 <!--  -->
 <!-- This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome! -->
+
+[ray-tune]: https://docs.ray.io/en/latest/tune/index.html
+[asha-paper]: https://arxiv.org/abs/1810.05934
+[docs]: https://does/not/yet/exist

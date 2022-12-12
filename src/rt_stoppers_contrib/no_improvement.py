@@ -19,6 +19,10 @@ class NoImprovementStopper(tune.Stopper):
         """Stopper that stops if at no iteration within ``num_results`` a better
         result than the current best one is observed.
 
+        This can be useful if your metric shows instabilities/oscillations and thus
+        does not converge in a way that would make the
+        ``tune.stopper.TrialPlateauStopper`` stop.
+
         Args:
             metric:
             rel_change_thld: Relative change threshold to be considered for improvement.

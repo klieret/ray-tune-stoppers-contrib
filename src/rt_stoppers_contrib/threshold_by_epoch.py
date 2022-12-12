@@ -11,8 +11,8 @@ class ThresholdByEpochStopper(tune.Stopper):
     def __init__(
         self, metric: str, thresholds: None | dict[int, float], *, mode: str = "max"
     ):
-        """Stopper that stops if results at a certain epoch fall above/below a certain
-        threshold.
+        """Stopper that stops a trial if results at a certain epoch fall above/below
+        a certain threshold.
 
         Args:
             metric: The metric to check
