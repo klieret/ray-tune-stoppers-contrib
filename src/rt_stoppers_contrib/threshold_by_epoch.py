@@ -46,7 +46,7 @@ class ThresholdByEpochStopper(tune.Stopper):
         else:
             raise ValueError(f"Invalid mode {self._comparison_mode}")
 
-    def __call__(self, trial_id, result: dict[str, Any]) -> bool:
+    def __call__(self, trial_id: Any, result: dict[str, Any]) -> bool:
         self._epoch[trial_id] += 1
         threshold = self._get_threshold(self._epoch[trial_id])
         if isnan(threshold):

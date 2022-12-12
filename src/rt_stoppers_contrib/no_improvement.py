@@ -11,10 +11,10 @@ class NoImprovementStopper(tune.Stopper):
         self,
         metric: str,
         *,
-        rel_change_thld=0.01,
+        rel_change_thld: float = 0.01,
         mode: str = "max",
-        patience=6,
-        grace_period=4,
+        patience: int = 6,
+        grace_period: int = 4,
     ):
         """Stopper that stops if at no iteration within ``num_results`` a better
         result than the current best one is observed.
@@ -60,7 +60,7 @@ class NoImprovementStopper(tune.Stopper):
             return True
         return False
 
-    def __call__(self, trial_id, result) -> bool:
+    def __call__(self, trial_id: Any, result: dict[str, Any]) -> bool:
         self._epoch[trial_id] += 1
         if self._best[trial_id] is None:
             self._best[trial_id] = result[self._metric]
@@ -78,5 +78,5 @@ class NoImprovementStopper(tune.Stopper):
             return True
         return False
 
-    def stop_all(self):
+    def stop_all(self) -> bool:
         return False
