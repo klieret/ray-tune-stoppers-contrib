@@ -1,5 +1,5 @@
-Welcome to ray-tune-stoppers-contrib documentation!
-==========================================
+Additional stoppers for ray tune
+================================
 
 .. toctree::
    :maxdepth: 2

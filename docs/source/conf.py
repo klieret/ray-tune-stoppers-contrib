@@ -31,7 +31,7 @@ templates_path = ["_templates"]
 exclude_patterns = []
 
 html_title = "Ray Tune Stoppers"
-
+html_logo = "_static/logo.png"
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
@@ -41,7 +41,7 @@ html_static_path = ["_static"]
 
 # -- Copy readme
 
-readme_path = Path(__file__).parent.resolve().parent.parent / "readme.md"
+readme_path = Path(__file__).parent.resolve().parent.parent / "README.md"
 readme_target = Path(__file__).parent / "readme.md"
 
 with readme_target.open("w") as outf:
@@ -60,5 +60,7 @@ with readme_target.open("w") as outf:
             continue
         if "<div" in line or "</div" in line:
             continue
-        lines.append(line.replace("readme_assets", "../../readme_assets"))
+        if "logo.png" in line:
+            continue
+        lines.append(line)
     outf.write("\n".join(lines))

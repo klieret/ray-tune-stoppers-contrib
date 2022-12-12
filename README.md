@@ -1,6 +1,8 @@
-<div>
+<div align="center">
 
 # Additional stoppers for ray tune
+
+![logo](docs/source/_static/logo.png)
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
