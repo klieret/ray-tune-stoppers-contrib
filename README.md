@@ -2,7 +2,7 @@
 
 # Additional stoppers for ray tune
 
-![logo](docs/source/_static/logo.png)
+![logo](https://user-images.githubusercontent.com/13602468/207724747-2f86dc4d-0c09-4d8f-9e7f-37614a0dab9d.png)
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
