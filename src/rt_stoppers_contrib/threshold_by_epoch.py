@@ -7,7 +7,7 @@ from typing import Any, DefaultDict
 from ray import tune
 
 
-class ThresholdByEpochStopper(tune.Stopper):
+class ThresholdTrialStopper(tune.Stopper):
     def __init__(
         self, metric: str, thresholds: None | dict[int, float], *, mode: str = "max"
     ):

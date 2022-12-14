@@ -5,7 +5,7 @@ from test import StopperTester
 
 import pytest
 
-from rt_stoppers_contrib.threshold_by_epoch import ThresholdByEpochStopper
+from rt_stoppers_contrib.threshold_by_epoch import ThresholdTrialStopper
 
 
 def get_reversed_experiment(st: StopperTester):
@@ -24,12 +24,12 @@ def get_reversed_experiment(st: StopperTester):
 
 _cases = [
     StopperTester(
-        ThresholdByEpochStopper("loss", None),
+        ThresholdTrialStopper("loss", None),
         [1.0, 2.0, 3.0, 4.0],
         doesnt_stop=True,
     ),
     StopperTester(
-        ThresholdByEpochStopper("loss", {2: 3}),
+        ThresholdTrialStopper("loss", {2: 3}),
         [
             1.0,
             2.0,
@@ -46,6 +46,6 @@ def test_integration(case):
 
 
 def test_invalid_mode():
-    stopper = ThresholdByEpochStopper("loss", {1: 1}, mode="invalid")
+    stopper = ThresholdTrialStopper("loss", {1: 1}, mode="invalid")
     with pytest.raises(ValueError, match="Invalid mode"):
         stopper(0, {"loss": 1.0})

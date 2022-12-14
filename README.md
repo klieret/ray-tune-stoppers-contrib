@@ -10,8 +10,8 @@
 <!-- [![Pypi status](https://badge.fury.io/py/ray-tune-stoppers-contrib.svg)](https://pypi.org/project/ray-tune-stoppers-contrib/) -->
 
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/klieret/ray-tune-stoppers-contrib/main.svg)](https://results.pre-commit.ci/latest/github/klieret/ray-tune-stoppers-contrib/main)
-[![gh actions](https://github.com/klieret/ray-tune-stoppers-contrib/actions/workflows/test.yaml/badge.svg)](https://github.com/klieret/ray-tune-stoppers-contrib/actions/workflows/test.yaml)
-[![link checker](https://github.com/klieret/ray-tune-stoppers-contrib/actions/workflows/check-links.yaml/badge.svg)](https://github.com/klieret/ray-tune-stoppers-contrib/actions)
+[![Python package](https://github.com/klieret/ray-tune-stoppers-contrib/actions/workflows/test.yaml/badge.svg)](https://github.com/klieret/ray-tune-stoppers-contrib/actions/workflows/test.yaml)
+[![Check Markdown links](https://github.com/klieret/ray-tune-stoppers-contrib/actions/workflows/check-links.yaml/badge.svg)](https://github.com/klieret/ray-tune-stoppers-contrib/actions/workflows/check-links.yaml)
 [![codecov](https://codecov.io/github/klieret/ray-tune-stoppers-contrib/branch/main/graph/badge.svg?token=6MQZ4LODE5)](https://codecov.io/github/klieret/ray-tune-stoppers-contrib)
 [![gitmoji](https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg)](https://gitmoji.dev)
 [![Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
@@ -36,18 +36,17 @@ This module aims to foster a greater variety of community maintained contributed
 pip3 install rt_stoppers_contrib
 ```
 
-## 🔥 Running it!
+## 🔥 Using it
 
-Using any other stoppers is as easy as
+Using any of the stoppers is as easy as
 
 ```python3
-from rt_stoppers_contrib.no_improvement import NoImprovementStopper
-
+from rt_stoppers_contrib.no_improvement import NoImprovementTrialStopper
 
 tuner = tune.Tuner(
     tune.Trainable,
     tune_config=...,
-    run_config=air.RunConfig(stop=NoImprovementStopper())
+    run_config=air.RunConfig(stop=NoImprovementTrialStopper())
 )
 ```
 
@@ -82,6 +81,12 @@ Bug reports and pull requests are credited with the help of the [allcontributors
 <!--  -->
 <!-- This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome! -->
 
+## ⚖️ License
+
+See [LICENSE](LICENSE) for more information. The logo is built from the official [ray-tune][ray-tune] logo
+together with [this stop sign][stop-sign] (CC 4.0).
+
 [ray-tune]: https://docs.ray.io/en/latest/tune/index.html
 [asha-paper]: https://arxiv.org/abs/1810.05934
 [docs]: https://does/not/yet/exist
+[stop-sign]: https://commons.wikimedia.org/wiki/File:Stop-sign.jpg

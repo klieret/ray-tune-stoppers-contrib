@@ -5,7 +5,7 @@ from test import StopperTester
 
 import pytest
 
-from rt_stoppers_contrib.no_improvement import NoImprovementStopper
+from rt_stoppers_contrib.no_improvement import NoImprovementTrialStopper
 
 
 def get_reversed_experiment(st: StopperTester):
@@ -23,20 +23,20 @@ def get_reversed_experiment(st: StopperTester):
 
 _cases = [
     StopperTester(
-        stopper=NoImprovementStopper(patience=3, metric="loss"),
+        stopper=NoImprovementTrialStopper(patience=3, metric="loss"),
         metric_results=[4.0, 3.0, 2.0, 1.0],
     ),
     StopperTester(
-        stopper=NoImprovementStopper(patience=3, metric="loss"),
+        stopper=NoImprovementTrialStopper(patience=3, metric="loss"),
         metric_results=[0.0, 0.0, 0.0, 0.0],
     ),
     StopperTester(
-        stopper=NoImprovementStopper(patience=3, metric="loss"),
+        stopper=NoImprovementTrialStopper(patience=3, metric="loss"),
         metric_results=[0.9, 3.0, 2.0, 1.0],
         doesnt_stop=True,
     ),
     StopperTester(
-        stopper=NoImprovementStopper(
+        stopper=NoImprovementTrialStopper(
             patience=3, metric="loss", mode="min", rel_change_thld=0.1
         ),
         metric_results=[0.92, 0.95, 1.1, 1.0],
@@ -53,4 +53,4 @@ def test_integration(case):
 
 def test_invalid_patience():
     with pytest.raises(ValueError, match="Patience must be at least 1."):
-        NoImprovementStopper(metric="loss", patience=0)
+        NoImprovementTrialStopper(metric="loss", patience=0)

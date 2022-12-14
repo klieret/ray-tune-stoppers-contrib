@@ -6,7 +6,7 @@ from typing import Any, DefaultDict
 from ray import tune
 
 
-class NoImprovementStopper(tune.Stopper):
+class NoImprovementTrialStopper(tune.Stopper):
     def __init__(
         self,
         metric: str,
@@ -16,7 +16,7 @@ class NoImprovementStopper(tune.Stopper):
         patience: int = 6,
         grace_period: int = 4,
     ):
-        """Stopper that stops if at no iteration within ``num_results`` a better
+        """Stopper that stops trial if at no iteration within ``num_results`` a better
         result than the current best one is observed.
 
         This can be useful if your metric shows instabilities/oscillations and thus
