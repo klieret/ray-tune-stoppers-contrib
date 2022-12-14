@@ -39,6 +39,8 @@ pip3 install rt_stoppers_contrib
 
 ## 🔥 Using it
 
+For a full list of the stoppers offered, see the the [documentation][doc-all-stoppers].
+
 Using any of the stoppers is as easy as
 
 ```python3
@@ -51,7 +53,7 @@ tuner = tune.Tuner(
 )
 ```
 
-For more information, refer to the [documentation][docs]
+For more information, refer to the [documentation][docs].
 
 ## 🧰 Development setup
 
@@ -91,3 +93,4 @@ together with [this stop sign][stop-sign] (CC 4.0).
 [asha-paper]: https://arxiv.org/abs/1810.05934
 [docs]: https://ray-tune-stoppers-contrib.readthedocs.io/
 [stop-sign]: https://commons.wikimedia.org/wiki/File:Stop-sign.jpg
+[doc-all-stoppers]: https://ray-tune-stoppers-contrib.readthedocs.io/en/latest/autoapi/rt_stoppers_contrib/index.html
