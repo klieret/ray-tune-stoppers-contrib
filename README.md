@@ -9,6 +9,7 @@
 <!-- [![Documentation Status](https://readthedocs.org/projects/ray-tune-stoppers-contrib/badge/?version=latest)](https://ray-tune-stoppers-contrib.readthedocs.io/) -->
 <!-- [![Pypi status](https://badge.fury.io/py/ray-tune-stoppers-contrib.svg)](https://pypi.org/project/ray-tune-stoppers-contrib/) -->
 
+[![Documentation Status](https://readthedocs.org/projects/ray-tune-stoppers-contrib/badge/?version=latest)](https://ray-tune-stoppers-contrib.readthedocs.io/en/latest/?badge=latest)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/klieret/ray-tune-stoppers-contrib/main.svg)](https://results.pre-commit.ci/latest/github/klieret/ray-tune-stoppers-contrib/main)
 [![Python package](https://github.com/klieret/ray-tune-stoppers-contrib/actions/workflows/test.yaml/badge.svg)](https://github.com/klieret/ray-tune-stoppers-contrib/actions/workflows/test.yaml)
 [![Check Markdown links](https://github.com/klieret/ray-tune-stoppers-contrib/actions/workflows/check-links.yaml/badge.svg)](https://github.com/klieret/ray-tune-stoppers-contrib/actions/workflows/check-links.yaml)
@@ -88,5 +89,5 @@ together with [this stop sign][stop-sign] (CC 4.0).
 
 [ray-tune]: https://docs.ray.io/en/latest/tune/index.html
 [asha-paper]: https://arxiv.org/abs/1810.05934
-[docs]: https://does/not/yet/exist
+[docs]: https://ray-tune-stoppers-contrib.readthedocs.io/
 [stop-sign]: https://commons.wikimedia.org/wiki/File:Stop-sign.jpg
