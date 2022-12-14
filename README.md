@@ -24,7 +24,7 @@
 
 [Ray tune][ray-tune] is a tool for scalable hyperparameter tuning for machine learning applications.
 For intelligent hyperperameter optimization, trials that are performing inadequately should be stopped early.
-Part of this can be done by schedulers such as [ASHA](asha-paper), but additional explicit stopping criteria are useful as well.
+Part of this can be done by schedulers such as [ASHA][asha-paper], but additional explicit stopping criteria are useful as well.
 
 For example, a trial that has converged and is no longer producing better results, but is still outperforming all other running trials, will not be stopped by ASHA.
 Ray tune currently only provides three different stoppers: a plateau stopper, a maximum iterations stopper, and a timeout stopper.
@@ -84,7 +84,7 @@ Bug reports and pull requests are credited with the help of the [allcontributors
 
 ## ⚖️ License
 
-See [LICENSE](LICENSE) for more information. The logo is built from the official [ray-tune][ray-tune] logo
+See [LICENSE](LICENSE.txt) for more information. The logo is built from the official [ray-tune][ray-tune] logo
 together with [this stop sign][stop-sign] (CC 4.0).
 
 [ray-tune]: https://docs.ray.io/en/latest/tune/index.html
