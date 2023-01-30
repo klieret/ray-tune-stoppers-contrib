@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import collections
+import logging
 from math import isnan
 from typing import Any, DefaultDict, TypeVar
 
@@ -184,3 +185,37 @@ class AndStopper(tune.Stopper):
 
     def stop_all(self) -> bool:
         return all([stopper.stop_all() for stopper in self._stoppers])
+
+
+class LoggedStopper(tune.Stopper):
+    def __init__(self, stopper: tune.Stopper, logger: logging.Logger | None = None):
+        """Wrapper class to make an existing `tune.Stopper` issue log messages when stopping a trial/experiment.
+
+        This can be useful if there are multiple stoppers involved.
+
+        Args:
+            stopper: Existing `tune.stopper`
+            logger: Logger to use. If None, a new logger is set up with `INFO` log
+                level.
+        """
+        if logger is None:
+            logger = logging.getLogger("rt_stoppers_contrib")
+            logger.setLevel(logging.INFO)
+            ch = logging.StreamHandler()
+            ch.setLevel(logging.DEBUG)
+            logger.addHandler(ch)
+        self._logger = logger
+        self._stopper = stopper
+        super().__init__()
+
+    def __call__(self, trial_id: Any, result: dict[str, Any]) -> bool:
+        stop = self._stopper(trial_id, result)
+        if stop:
+            self._logger.info(f"Trial {trial_id} stopped because of {self._stopper:!r}")
+        return stop
+
+    def stop_all(self) -> bool:
+        stop = self._stopper.stop_all()
+        if stop:
+            self._logger.info(f"All trials stopped because of {self._stopper:!r}")
+        return stop
