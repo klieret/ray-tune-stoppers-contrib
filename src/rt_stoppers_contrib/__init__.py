@@ -21,9 +21,9 @@ _T = TypeVar("_T")
 
 default_logger = logging.getLogger("rt_stoppers_contrib")
 default_logger.setLevel(logging.INFO)
-ch = logging.StreamHandler()
-ch.setLevel(logging.INFO)
-default_logger.addHandler(ch)
+_ch = logging.StreamHandler()
+_ch.setLevel(logging.INFO)
+default_logger.addHandler(_ch)
 
 
 def _get_quantity_for_epoch(
