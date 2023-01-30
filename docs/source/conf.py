@@ -24,7 +24,7 @@ extensions.append("recommonmark")
 
 autoapi_type = "python"
 autoapi_dirs = ["../../src/rt_stoppers_contrib"]
-autoapi_ignore = ["*/no_improvement.py", "*/threshold_by_epoch.py"]
+autoapi_ignore = ["*/no_improvement.py", "*/threshold_by_epoch.py", "*/util/*"]
 autoapi_python_class_content = "init"
 autoapi_options = [
     "members",
