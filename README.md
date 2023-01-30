@@ -49,7 +49,7 @@ from rt_stoppers_contrib.no_improvement import NoImprovementTrialStopper
 tuner = tune.Tuner(
     tune.Trainable,
     tune_config=...,
-    run_config=air.RunConfig(stop=NoImprovementTrialStopper())
+    run_config=air.RunConfig(stop=NoImprovementTrialStopper("my_metric"))
 )
 ```
 
