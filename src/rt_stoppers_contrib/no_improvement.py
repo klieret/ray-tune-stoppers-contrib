@@ -28,9 +28,11 @@ class NoImprovementTrialStopper(tune.Stopper):
             rel_change_thld: Relative change threshold to be considered for improvement.
                 Any change that is less than that is considered no improvement. If set
                 to 0, any change is considered an improvement.
+                Can also be set to a dictionary epoch -> threshold.
             mode: "max" or "min"
             patience: Number of iterations without improvement after which to stop.
                 If 1, stop after the first iteration without improvement.
+                Can also be set to a dictionary epoch -> patience.
             grace_period: Number of iterations to wait before considering stopping
         """
         self._metric = metric
@@ -45,6 +47,10 @@ class NoImprovementTrialStopper(tune.Stopper):
         )
         self._stagnant: DefaultDict[Any, int] = collections.defaultdict(int)
         self._epoch: DefaultDict[Any, int] = collections.defaultdict(int)
+
+    @property
+    def rel_change_thld(self) -> float:
+        return self._rel_change_thld
 
     def _better_than(self, a: float, b: float) -> bool:
         """Is result a better than result b?"""
