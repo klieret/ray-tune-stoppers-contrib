@@ -19,6 +19,13 @@ __version__ = version("rt_stoppers_contrib")
 _T = TypeVar("_T")
 
 
+default_logger = logging.getLogger("rt_stoppers_contrib")
+default_logger.setLevel(logging.INFO)
+ch = logging.StreamHandler()
+ch.setLevel(logging.INFO)
+default_logger.addHandler(ch)
+
+
 def _get_quantity_for_epoch(
     values: dict[int, _T] | _T, epoch: int, fallback: _T | None = None
 ) -> _T:
@@ -51,6 +58,7 @@ class NoImprovementTrialStopper(tune.Stopper):
         mode: str = "max",
         patience: int | dict[int, int] = 6,
         grace_period: int = 4,
+        logger: logging.Logger | None = None,
     ):
         """Stopper that stops trial if at no iteration within ``num_results`` a better
         result than the current best one is observed.
@@ -72,6 +80,7 @@ class NoImprovementTrialStopper(tune.Stopper):
                 Can also be set to a dictionary epoch -> patience (the first epoch
                 has the index 0).
             grace_period: Number of iterations to wait before considering stopping
+            logger: Logger to use. If None, a default logger is used.
         """
         self._metric = metric
         self._rel_change_thld = rel_change_thld
@@ -90,6 +99,9 @@ class NoImprovementTrialStopper(tune.Stopper):
         )
         self._stagnant: DefaultDict[Any, int] = collections.defaultdict(int)
         self._epoch: DefaultDict[Any, int] = collections.defaultdict(int)
+        if logger is None:
+            logger = default_logger
+        self._logger = logger
 
     def _better_than(self, a: float, b: float, epoch: int) -> bool:
         """Is result a better than result b?"""
@@ -121,7 +133,13 @@ class NoImprovementTrialStopper(tune.Stopper):
         self._stagnant[trial_id] += 1
         if self._epoch[trial_id] < self._grace_period:
             return False
-        if self._stagnant[trial_id] >= _get_quantity_for_epoch(self._patience, epoch):
+        patience = _get_quantity_for_epoch(self._patience, epoch)
+        if self._stagnant[trial_id] >= patience:
+            self._logger.info(
+                "Stopping trial because no improvement was seen in the "
+                "last %d epochs.",
+                patience,
+            )
             return True
         return False
 
@@ -131,7 +149,12 @@ class NoImprovementTrialStopper(tune.Stopper):
 
 class ThresholdTrialStopper(tune.Stopper):
     def __init__(
-        self, metric: str, thresholds: None | dict[int, float], *, mode: str = "max"
+        self,
+        metric: str,
+        thresholds: None | dict[int, float],
+        *,
+        mode: str = "max",
+        logger: logging.Logger | None = None,
     ):
         """Stopper that stops a trial if results at a certain epoch fall above/below
         a certain threshold.
@@ -141,6 +164,7 @@ class ThresholdTrialStopper(tune.Stopper):
             thresholds: Thresholds as a mapping of epoch to threshold. The first epoch
                 (the first time the stopper is checked) is numbered 1.
             mode: "max" or "min"
+            logger: Logger to use. If None, a default logger is used.
         """
         self._metric = metric
         if thresholds is None:
@@ -148,6 +172,9 @@ class ThresholdTrialStopper(tune.Stopper):
         self._thresholds: dict[int, float] = thresholds
         self._comparison_mode = mode
         self._epoch: DefaultDict[Any, int] = collections.defaultdict(int)
+        if logger is None:
+            logger = default_logger
+        self._logger = logger
 
     def _get_threshold(self, epoch: int) -> float:
         """Get threshold for epoch. NaN is returned if no threshold is
@@ -169,22 +196,54 @@ class ThresholdTrialStopper(tune.Stopper):
         threshold = self._get_threshold(self._epoch[trial_id])
         if isnan(threshold):
             return False
-        return not self._better_than(result[self._metric], threshold)
+        ans = not self._better_than(result[self._metric], threshold)
+        if ans:
+            comp_str = "above" if self._comparison_mode == "max" else "below"
+            self._logger.info(
+                "Stopping trial because result %f is %s threshold %f.",
+                result[self._metric],
+                comp_str,
+                threshold,
+            )
+        return ans
 
     def stop_all(self) -> bool:
         return False
 
 
 class AndStopper(tune.Stopper):
-    def __init__(self, stoppers: list[tune.Stopper]):
-        """Trigger stopping option only if all stoppers agree."""
+    def __init__(
+        self, stoppers: list[tune.Stopper], *, logger: logging.Logger | None = None
+    ):
+        """Trigger stopping option only if all stoppers agree.
+
+        Args:
+            stoppers: List of stoppers to use.
+            logger: Logger to use. If None, a default logger is used.
+        """
         self._stoppers = stoppers
+        if logger is None:
+            logger = default_logger
+        self._logger = logger
 
     def __call__(self, trial_id: Any, result: dict[str, Any]) -> bool:
-        return all([stopper(trial_id, result) for stopper in self._stoppers])
+        ans = all([stopper(trial_id, result) for stopper in self._stoppers])
+        if ans:
+            self._logger.info(
+                "Stopping trial because stoppers %s agree that it should be stopped.",
+                self._stoppers,
+            )
+        return ans
 
     def stop_all(self) -> bool:
-        return all([stopper.stop_all() for stopper in self._stoppers])
+        ans = all([stopper.stop_all() for stopper in self._stoppers])
+        if ans:
+            self._logger.info(
+                "Stopping all trials because stoppers %s agree that all trials should "
+                "be stopped.",
+                self._stoppers,
+            )
+        return ans
 
 
 class LoggedStopper(tune.Stopper):
@@ -199,11 +258,7 @@ class LoggedStopper(tune.Stopper):
                 level.
         """
         if logger is None:
-            logger = logging.getLogger("rt_stoppers_contrib")
-            logger.setLevel(logging.INFO)
-            ch = logging.StreamHandler()
-            ch.setLevel(logging.DEBUG)
-            logger.addHandler(ch)
+            logger = default_logger
         self._logger = logger
         self._stopper = stopper
         super().__init__()
