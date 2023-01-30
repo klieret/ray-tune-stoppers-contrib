@@ -11,5 +11,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Added
 
+- All stoppers now show a log message when stopping trials or experiments
 - `LoggedStopper` to add logging to existing stoppers
 - `NoImprovementTrialStopper` now accepts epoch-dependent settings
