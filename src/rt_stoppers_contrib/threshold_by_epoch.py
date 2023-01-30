@@ -6,6 +6,8 @@ from typing import Any, DefaultDict
 
 from ray import tune
 
+from rt_stoppers_contrib.util.misc import _get_quantity_for_epoch
+
 
 class ThresholdTrialStopper(tune.Stopper):
     def __init__(
@@ -31,11 +33,7 @@ class ThresholdTrialStopper(tune.Stopper):
         """Get threshold for epoch. NaN is returned if no threshold is
         defined.
         """
-        relevant_epoch = max([k for k in self._thresholds if k <= epoch], default=-1)
-        if relevant_epoch < 0:
-            return float("nan")
-        assert relevant_epoch in self._thresholds
-        return self._thresholds[relevant_epoch]
+        return _get_quantity_for_epoch(self._thresholds, epoch, fallback=float("nan"))
 
     def _better_than(self, a: float, b: float) -> bool:
         """Is a better than b based on the comparison mode?"""
