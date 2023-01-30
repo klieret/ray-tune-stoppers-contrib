@@ -44,7 +44,7 @@ For a full list of the stoppers offered, see the the [documentation][doc-all-sto
 Using any of the stoppers is as easy as
 
 ```python3
-from rt_stoppers_contrib.no_improvement import NoImprovementTrialStopper
+from rt_stoppers_contrib import NoImprovementTrialStopper
 
 tuner = tune.Tuner(
     tune.Trainable,

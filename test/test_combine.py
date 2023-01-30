@@ -2,11 +2,10 @@ from __future__ import annotations
 
 from test import StopperTester
 
-from rt_stoppers_contrib.combine import AndStopper
-from rt_stoppers_contrib.no_improvement import NoImprovementTrialStopper
+from rt_stoppers_contrib import AndStopper, NoImprovementTrialStopper
 
 
-def test_combine_stopper_single():
+def test_combine_stopper_single() -> None:
     StopperTester(
         stopper=AndStopper(
             [
@@ -17,7 +16,7 @@ def test_combine_stopper_single():
     )
 
 
-def test_combine_stopper_clone():
+def test_combine_stopper_clone() -> None:
     StopperTester(
         stopper=AndStopper(
             [
@@ -29,7 +28,7 @@ def test_combine_stopper_clone():
     )
 
 
-def test_combine_stopper_mixed():
+def test_combine_stopper_mixed() -> None:
     StopperTester(
         stopper=AndStopper(
             [
@@ -41,7 +40,7 @@ def test_combine_stopper_mixed():
     )
 
 
-def test_combine_stopper_empty():
+def test_combine_stopper_empty() -> None:
     StopperTester(
         stopper=AndStopper([]),
         metric_results=[4.0, 3.0, 2.0, 1.0],

@@ -5,10 +5,10 @@ from test import StopperTester
 
 import pytest
 
-from rt_stoppers_contrib.threshold_by_epoch import ThresholdTrialStopper
+from rt_stoppers_contrib import ThresholdTrialStopper
 
 
-def get_reversed_experiment(st: StopperTester):
+def get_reversed_experiment(st: StopperTester) -> StopperTester:
     """Changes signs of metric results and sets mode to min instead of max
     (and vice-versa)
     """
@@ -41,11 +41,11 @@ cases.extend([get_reversed_experiment(c) for c in _cases])
 
 
 @pytest.mark.parametrize("case", cases)
-def test_integration(case):
+def test_integration(case: StopperTester) -> None:
     case.run()
 
 
-def test_invalid_mode():
+def test_invalid_mode() -> None:
     stopper = ThresholdTrialStopper("loss", {1: 1}, mode="invalid")
     with pytest.raises(ValueError, match="Invalid mode"):
         stopper(0, {"loss": 1.0})

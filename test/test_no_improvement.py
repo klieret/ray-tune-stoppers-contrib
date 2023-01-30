@@ -5,10 +5,10 @@ from test import StopperTester
 
 import pytest
 
-from rt_stoppers_contrib.no_improvement import NoImprovementTrialStopper
+from rt_stoppers_contrib import NoImprovementTrialStopper
 
 
-def get_reversed_experiment(st: StopperTester):
+def get_reversed_experiment(st: StopperTester) -> StopperTester:
     """Flips the order of metric results and sets mode to min instead of max
     (and vice-versa)
     """
@@ -47,10 +47,10 @@ cases.extend([get_reversed_experiment(c) for c in _cases])
 
 
 @pytest.mark.parametrize("case", cases)
-def test_integration(case):
+def test_integration(case: StopperTester) -> None:
     case.run()
 
 
-def test_invalid_patience():
+def test_invalid_patience() -> None:
     with pytest.raises(ValueError, match="Patience must be at least 1."):
         NoImprovementTrialStopper(metric="loss", patience=0)

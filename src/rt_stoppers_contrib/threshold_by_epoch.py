@@ -1,55 +1,12 @@
 from __future__ import annotations
 
-import collections
-from math import isnan
-from typing import Any, DefaultDict
+import warnings
 
-from ray import tune
+from rt_stoppers_contrib import ThresholdTrialStopper  # noqa: F401
 
-from rt_stoppers_contrib.util.misc import _get_quantity_for_epoch
-
-
-class ThresholdTrialStopper(tune.Stopper):
-    def __init__(
-        self, metric: str, thresholds: None | dict[int, float], *, mode: str = "max"
-    ):
-        """Stopper that stops a trial if results at a certain epoch fall above/below
-        a certain threshold.
-
-        Args:
-            metric: The metric to check
-            thresholds: Thresholds as a mapping of epoch to threshold. The first epoch
-                (the first time the stopper is checked) is numbered 1.
-            mode: "max" or "min"
-        """
-        self._metric = metric
-        if thresholds is None:
-            thresholds = {}
-        self._thresholds: dict[int, float] = thresholds
-        self._comparison_mode = mode
-        self._epoch: DefaultDict[Any, int] = collections.defaultdict(int)
-
-    def _get_threshold(self, epoch: int) -> float:
-        """Get threshold for epoch. NaN is returned if no threshold is
-        defined.
-        """
-        return _get_quantity_for_epoch(self._thresholds, epoch, fallback=float("nan"))
-
-    def _better_than(self, a: float, b: float) -> bool:
-        """Is a better than b based on the comparison mode?"""
-        if self._comparison_mode == "max":
-            return a > b
-        elif self._comparison_mode == "min":
-            return a < b
-        else:
-            raise ValueError(f"Invalid mode {self._comparison_mode}")
-
-    def __call__(self, trial_id: Any, result: dict[str, Any]) -> bool:
-        self._epoch[trial_id] += 1
-        threshold = self._get_threshold(self._epoch[trial_id])
-        if isnan(threshold):
-            return False
-        return not self._better_than(result[self._metric], threshold)
-
-    def stop_all(self) -> bool:
-        return False
+warnings.warn(
+    "Please import ThresholdTrialStopper directly from the rt_stoppers_contrib. "
+    "This module will be removed in a future release.",
+    category=DeprecationWarning,
+    stacklevel=2,
+)
