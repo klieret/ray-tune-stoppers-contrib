@@ -5,7 +5,10 @@ from ray import tune
 
 class StopperTester:
     def __init__(
-        self, stopper: tune.Stopper, metric_results: list[float], doesnt_stop=False
+        self,
+        stopper: tune.Stopper,
+        metric_results: list[float],
+        doesnt_stop: bool = False,
     ):
         """
 
@@ -18,7 +21,7 @@ class StopperTester:
         self._metric_results = metric_results
         self._doesnt_stop = doesnt_stop
 
-    def run(self):
+    def run(self) -> None:
         last_epoch = len(self._metric_results)
         for epoch, result in enumerate(self._metric_results, start=1):
             ret = self._stopper(0, {"loss": result})
