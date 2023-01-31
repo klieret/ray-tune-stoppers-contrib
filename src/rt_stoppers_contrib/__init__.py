@@ -136,8 +136,9 @@ class NoImprovementTrialStopper(tune.Stopper):
         patience = _get_quantity_for_epoch(self._patience, epoch)
         if self._stagnant[trial_id] >= patience:
             self._logger.info(
-                "Stopping trial because no improvement was seen in the "
+                "Stopping trial %s, because no improvement was seen in the "
                 "last %d epochs.",
+                trial_id,
                 patience,
             )
             return True
@@ -200,7 +201,8 @@ class ThresholdTrialStopper(tune.Stopper):
         if ans:
             comp_str = "above" if self._comparison_mode == "max" else "below"
             self._logger.info(
-                "Stopping trial because result %f is %s threshold %f.",
+                "Stopping trial %s because result %f is %s threshold %f.",
+                trial_id,
                 result[self._metric],
                 comp_str,
                 threshold,
@@ -230,7 +232,9 @@ class AndStopper(tune.Stopper):
         ans = all([stopper(trial_id, result) for stopper in self._stoppers])
         if ans:
             self._logger.info(
-                "Stopping trial because stoppers %s agree that it should be stopped.",
+                "Stopping trial %s, because stoppers %s agree that it should be "
+                "stopped.",
+                trial_id,
                 self._stoppers,
             )
         return ans
