@@ -199,7 +199,7 @@ class ThresholdTrialStopper(tune.Stopper):
             return False
         ans = not self._better_than(result[self._metric], threshold)
         if ans:
-            comp_str = "above" if self._comparison_mode == "max" else "below"
+            comp_str = "below" if self._comparison_mode == "max" else "above"
             self._logger.info(
                 "Stopping trial %s because result %f is %s threshold %f.",
                 trial_id,
