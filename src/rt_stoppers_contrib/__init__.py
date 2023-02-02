@@ -270,11 +270,11 @@ class LoggedStopper(tune.Stopper):
     def __call__(self, trial_id: Any, result: dict[str, Any]) -> bool:
         stop = self._stopper(trial_id, result)
         if stop:
-            self._logger.info(f"Trial {trial_id} stopped because of {self._stopper:!r}")
+            self._logger.info("Trial %s stopped because of %s", trial_id, self._stopper)
         return stop
 
     def stop_all(self) -> bool:
         stop = self._stopper.stop_all()
         if stop:
-            self._logger.info(f"All trials stopped because of {self._stopper:!r}")
+            self._logger.info(f"All trials stopped because of {self._stopper!r}")
         return stop
