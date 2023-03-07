@@ -13,7 +13,7 @@
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/klieret/ray-tune-stoppers-contrib/main.svg)](https://results.pre-commit.ci/latest/github/klieret/ray-tune-stoppers-contrib/main)
 [![Python package](https://github.com/klieret/ray-tune-stoppers-contrib/actions/workflows/test.yaml/badge.svg)](https://github.com/klieret/ray-tune-stoppers-contrib/actions/workflows/test.yaml)
 [![Check Markdown links](https://github.com/klieret/ray-tune-stoppers-contrib/actions/workflows/check-links.yaml/badge.svg)](https://github.com/klieret/ray-tune-stoppers-contrib/actions/workflows/check-links.yaml)
-[![codecov](https://codecov.io/github/klieret/ray-tune-stoppers-contrib/branch/main/graph/badge.svg?token=6MQZ4LODE5)](https://codecov.io/github/klieret/ray-tune-stoppers-contrib)
+[![codecov](https://codecov.io/github/klieret/ray-tune-stoppers-contrib/branch/main/graph/badge.svg?token=6MQZ4LODE5)](https://app.codecov.io/github/klieret/ray-tune-stoppers-contrib)
 [![gitmoji](https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg)](https://gitmoji.dev)
 [![Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
 [![PR welcome](https://img.shields.io/badge/PR-Welcome-%23FF8300.svg)](https://git-scm.com/book/en/v2/GitHub-Contributing-to-a-Project)
