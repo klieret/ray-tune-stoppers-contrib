@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/psf/black
-    rev: 23.3.0
+    rev: 23.9.1
     hooks:
       - id: black
       - id: black-jupyter
@@ -28,17 +28,17 @@ repos:
             "--append-only",
           ]
   - repo: https://github.com/PyCQA/flake8
-    rev: "6.0.0"
+    rev: "6.1.0"
     hooks:
       - id: flake8
         additional_dependencies: ["flake8-bugbear"]
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v1.2.0"
+    rev: "v1.5.1"
     hooks:
       - id: mypy
         exclude: 'docs/source/conf\.py'
   - repo: https://github.com/codespell-project/codespell
-    rev: "v2.2.4"
+    rev: "v2.2.6"
     hooks:
       - id: codespell
         args: ["-I", "codespell.txt"]
@@ -48,21 +48,21 @@ repos:
       - id: nbstripout
         args: ["--extra-keys", "cell.metadata.pycharm"]
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.3.2
+    rev: v3.14.0
     hooks:
       - id: pyupgrade
         args: ["--py37-plus"]
   - repo: https://github.com/asottile/setup-cfg-fmt
-    rev: "v2.2.0"
+    rev: "v2.5.0"
     hooks:
       - id: setup-cfg-fmt
         args: [--include-version-classifiers, --max-py-version=3.10]
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: "v3.0.0-alpha.9-for-vscode"
+    rev: "v3.0.3"
     hooks:
       - id: prettier
   - repo: https://github.com/hadialqattan/pycln
-    rev: v2.1.3
+    rev: v2.2.2
     hooks:
       - id: pycln
         args: [--config=pyproject.toml]
