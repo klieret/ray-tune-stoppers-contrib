@@ -42,7 +42,7 @@ _cases = [
         metric_results=[0.92, 0.95, 1.1, 1.0],
     ),
 ]
-cases = [c for c in _cases]
+cases = [*_cases]
 cases.extend([get_reversed_experiment(c) for c in _cases])
 
 
