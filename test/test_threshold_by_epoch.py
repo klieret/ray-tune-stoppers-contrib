@@ -36,7 +36,7 @@ _cases = [
         ],
     ),
 ]
-cases = [c for c in _cases]
+cases = [*_cases]
 cases.extend([get_reversed_experiment(c) for c in _cases])
 
 
